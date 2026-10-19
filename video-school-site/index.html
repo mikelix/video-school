@@ -1,0 +1,1005 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="light dark" />
+    <link rel="icon" href="data:," />
+    <title>Video-Making Learning Website</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,650;9..144,800&family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --bg: #f4f5ea;
+        --bg-soft: #eceeda;
+        --ink: #17211b;
+        --muted: #5a6656;
+        --card: #ffffff;
+        --card-line: rgba(23, 33, 27, 0.14);
+        --green: #123b2a;
+        --green-deep: #0b291d;
+        --green-ink: #eef3e4;
+        --lime: #c6e64b;
+        --lime-soft: #e6f2b8;
+        --orange: #cf5a1e;
+        --blue: #dcecf7;
+        --blue-ink: #173a52;
+        --code-bg: #0e2018;
+        --code-ink: #dcead2;
+        --shadow: 0 14px 34px rgba(18, 42, 29, 0.10);
+        --radius: 18px;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #10160f;
+          --bg-soft: #161e13;
+          --ink: #eef1e2;
+          --muted: #a7b39e;
+          --card: #1a241c;
+          --card-line: rgba(238, 241, 226, 0.16);
+          --green: #16402d;
+          --green-deep: #0d2c1f;
+          --green-ink: #eef3e4;
+          --lime: #c6e64b;
+          --lime-soft: #2c3d17;
+          --orange: #e8773a;
+          --blue: #1d3448;
+          --blue-ink: #dcecf7;
+          --code-bg: #08130d;
+          --code-ink: #dcead2;
+          --shadow: 0 14px 34px rgba(0, 0, 0, 0.45);
+        }
+      }
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--ink);
+        font-family: "Archivo", system-ui, sans-serif;
+        font-size: 17px;
+        line-height: 1.55;
+        -webkit-font-smoothing: antialiased;
+      }
+      h1, h2, h3 { font-family: "Fraunces", Georgia, serif; font-weight: 650; line-height: 1.08; margin: 0; }
+      p { margin: 0; }
+      a { color: inherit; }
+      .wrap { max-width: 1180px; margin: 0 auto; padding: 0 22px; }
+      .kicker {
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 12px; font-weight: 600;
+        letter-spacing: 0.18em; text-transform: uppercase;
+        color: var(--orange);
+        margin: 0 0 14px;
+      }
+      .kicker.on-dark { color: var(--lime); }
+      section { padding: 84px 0 10px; scroll-margin-top: 84px; }
+      .sec-head { max-width: 720px; margin-bottom: 34px; }
+      .sec-head h2 { font-size: clamp(30px, 4.4vw, 46px); margin-bottom: 14px; }
+      .sec-head p { color: var(--muted); font-size: 18px; }
+
+      /* ---------- sticky nav ---------- */
+      .topnav {
+        position: sticky; top: 0; z-index: 50;
+        background: color-mix(in srgb, var(--bg) 88%, transparent);
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid var(--card-line);
+      }
+      .topnav .wrap { display: flex; align-items: center; gap: 22px; padding-top: 12px; padding-bottom: 12px; }
+      .brand { font-family: "Fraunces", serif; font-weight: 800; font-size: 19px; white-space: nowrap; }
+      .brand span { color: var(--orange); }
+      .navlinks { display: flex; gap: 4px; overflow-x: auto; scrollbar-width: none; -webkit-mask-image: linear-gradient(to right, #000 90%, transparent); mask-image: linear-gradient(to right, #000 90%, transparent); }
+      .navlinks::-webkit-scrollbar { display: none; }
+      .navlinks a {
+        text-decoration: none; font-size: 14.5px; font-weight: 600; white-space: nowrap;
+        padding: 7px 12px; border-radius: 999px; color: var(--muted);
+      }
+      .navlinks a:hover { background: var(--lime-soft); color: var(--ink); }
+
+      /* ---------- hero ---------- */
+      .hero { padding: 64px 0 20px; }
+      .hero-grid { display: grid; grid-template-columns: 1.25fr 0.75fr; gap: 44px; align-items: center; }
+      .pill {
+        display: inline-block; background: var(--lime); color: #1c2a12;
+        font-family: "IBM Plex Mono", monospace; font-size: 12.5px; font-weight: 600;
+        letter-spacing: 0.14em; text-transform: uppercase;
+        padding: 7px 14px; border-radius: 999px; margin-bottom: 22px;
+      }
+      .hero h1 { font-size: clamp(44px, 6.6vw, 76px); font-weight: 800; margin-bottom: 20px; }
+      .hero h1 em { font-style: normal; color: var(--orange); }
+      .hero .sub { font-size: 19.5px; color: var(--muted); max-width: 560px; margin-bottom: 30px; }
+      .cta-row { display: flex; flex-wrap: wrap; gap: 12px; }
+      .btn {
+        display: inline-block; text-decoration: none; font-weight: 700; font-size: 16px;
+        padding: 13px 22px; border-radius: 999px; border: 2px solid var(--green);
+        background: var(--green); color: var(--green-ink); cursor: pointer;
+      }
+      .btn.ghost { background: transparent; color: var(--ink); }
+      .btn:hover { filter: brightness(1.08); }
+      .hero-note { margin-top: 22px; font-size: 14.5px; color: var(--muted); max-width: 520px; }
+      .hero-card {
+        background: var(--green-deep); border-radius: 24px; padding: 14px;
+        box-shadow: var(--shadow); transform: rotate(1.2deg);
+      }
+      .hero-card img {
+        display: block; width: 100%; aspect-ratio: 4 / 4.6; object-fit: cover; object-position: top;
+        border-radius: 14px;
+      }
+      .spec-strip {
+        display: flex; flex-wrap: wrap; gap: 8px 16px; padding: 14px 6px 6px;
+        color: var(--green-ink); font-family: "IBM Plex Mono", monospace; font-size: 13px;
+      }
+      .spec-strip b { color: var(--lime); font-weight: 600; }
+
+      /* ---------- the film ---------- */
+      .film-grid { display: grid; grid-template-columns: 330px 1fr; gap: 44px; align-items: center; }
+      .film-frame {
+        position: relative; aspect-ratio: 9 / 16; max-height: 600px; width: 100%;
+        background: var(--green-deep); border-radius: 20px; overflow: hidden;
+        box-shadow: var(--shadow);
+      }
+      .film-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; display: block; }
+      .film-side h2 { font-size: clamp(30px, 4.4vw, 46px); margin-bottom: 14px; }
+      .film-side .lede { color: var(--muted); font-size: 18px; max-width: 560px; margin-bottom: 20px; }
+      .film-cite { margin-top: 20px; font-size: 14.5px; color: var(--muted); max-width: 560px; }
+      .film-cite b { color: var(--ink); }
+
+      /* ---------- tabs / crew ---------- */
+      .tabs { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 22px; }
+      .tab-btn {
+        font-family: inherit; font-size: 17px; font-weight: 700; cursor: pointer;
+        padding: 12px 20px; border-radius: 999px;
+        border: 2px solid var(--card-line); background: var(--card); color: var(--ink);
+      }
+      .tab-btn .num { font-family: "IBM Plex Mono", monospace; font-size: 13px; color: var(--orange); margin-right: 8px; }
+      .tab-btn[aria-selected="true"] { background: var(--green); color: var(--green-ink); border-color: var(--green); }
+      .tab-btn[aria-selected="true"] .num { color: var(--lime); }
+      .tab-panel {
+        display: none; background: var(--card); border: 1px solid var(--card-line);
+        border-radius: var(--radius); padding: 30px; box-shadow: var(--shadow);
+      }
+      .tab-panel.active { display: block; }
+      .tab-panel h3 { font-size: 28px; margin-bottom: 8px; }
+      .tab-panel .who { font-family: "IBM Plex Mono", monospace; font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--orange); margin-bottom: 16px; }
+      .tab-panel p { max-width: 760px; margin-bottom: 14px; }
+      .example-box {
+        background: var(--bg-soft); border-radius: 12px; padding: 16px 18px; margin-top: 18px;
+        border-left: 5px solid var(--lime);
+      }
+      .example-box .lbl { font-family: "IBM Plex Mono", monospace; font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--orange); margin-bottom: 6px; }
+      .cast { margin-top: 26px; }
+      .cast h4 { font-family: "IBM Plex Mono", monospace; font-size: 12.5px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); margin: 0 0 12px; }
+      .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+      .chip {
+        background: var(--green); color: var(--green-ink); border-radius: 999px;
+        padding: 7px 14px; font-size: 14.5px; font-weight: 600;
+      }
+      .chip small { display: block; font-weight: 400; font-size: 12px; opacity: 0.78; }
+
+      /* ---------- pipeline stepper ---------- */
+      .stepper { display: grid; grid-template-columns: 300px 1fr; gap: 22px; align-items: start; }
+      .stage-list { display: flex; flex-direction: column; gap: 8px; }
+      .stage-btn {
+        font-family: inherit; text-align: left; cursor: pointer;
+        background: var(--card); border: 1px solid var(--card-line); border-radius: 14px;
+        padding: 13px 16px; display: flex; align-items: center; gap: 12px; color: var(--ink);
+      }
+      .stage-btn .n {
+        font-family: "IBM Plex Mono", monospace; font-weight: 600; font-size: 14px;
+        background: var(--bg-soft); border-radius: 8px; padding: 4px 9px; flex-shrink: 0;
+      }
+      .stage-btn .t { font-weight: 700; font-size: 16px; }
+      .stage-btn .g { margin-left: auto; font-size: 13px; flex-shrink: 0; }
+      .stage-btn[aria-selected="true"] { background: var(--green); color: var(--green-ink); border-color: var(--green); }
+      .stage-btn[aria-selected="true"] .n { background: rgba(255,255,255,0.16); }
+      .stage-panel {
+        background: var(--green-deep); color: var(--green-ink); border-radius: var(--radius);
+        padding: 32px; box-shadow: var(--shadow); min-height: 340px;
+      }
+      .stage-panel h3 { font-size: 30px; margin-bottom: 6px; }
+      .stage-panel .role { font-family: "IBM Plex Mono", monospace; font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--lime); margin-bottom: 18px; }
+      .stage-panel p { font-size: 17.5px; max-width: 640px; margin-bottom: 16px; }
+      .gate-badge {
+        display: inline-block; font-family: "IBM Plex Mono", monospace; font-size: 13px; font-weight: 600;
+        letter-spacing: 0.06em; padding: 8px 14px; border-radius: 999px; margin-top: 4px;
+      }
+      .gate-human { background: #b3401a; color: #fff2ea; }
+      .gate-machine { background: var(--lime); color: #1c2a12; }
+      .gate-both { background: var(--lime-soft); color: #243312; }
+
+      /* ---------- Jev slider ---------- */
+      .jev-band {
+        margin-top: 30px; background: var(--card); border: 1px solid var(--card-line);
+        border-radius: var(--radius); padding: 30px; box-shadow: var(--shadow);
+      }
+      .jev-band h3 { font-size: 26px; margin-bottom: 8px; }
+      .jev-band > p { color: var(--muted); max-width: 720px; margin-bottom: 22px; }
+      .jev-readout { display: flex; align-items: baseline; gap: 18px; flex-wrap: wrap; margin-bottom: 10px; }
+      .jev-value { font-family: "Fraunces", serif; font-size: 56px; font-weight: 800; line-height: 1; }
+      .jev-route { font-weight: 700; font-size: 19px; padding: 8px 16px; border-radius: 999px; background: var(--bg-soft); }
+      .jev-route.auto { background: var(--lime); color: #1c2a12; }
+      .jev-route.ask { background: #f6d9a8; color: #5c3a05; }
+      .jev-route.human { background: #b3401a; color: #fff2ea; }
+      @media (prefers-color-scheme: dark) {
+        .jev-route.ask { background: #6b4d12; color: #ffe9bd; }
+      }
+      input[type="range"] { width: 100%; accent-color: var(--green); height: 34px; cursor: pointer; }
+      .jev-scale { display: flex; justify-content: space-between; font-family: "IBM Plex Mono", monospace; font-size: 12.5px; color: var(--muted); margin-bottom: 16px; }
+      .jev-presets { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+      .jev-presets button {
+        font-family: "IBM Plex Mono", monospace; font-size: 13.5px; cursor: pointer;
+        border: 1.5px solid var(--card-line); background: var(--bg); color: var(--ink);
+        border-radius: 999px; padding: 7px 14px;
+      }
+      .jev-presets button:hover { border-color: var(--orange); }
+      .jev-fine { font-size: 14px; color: var(--muted); }
+
+      /* ---------- workshop ---------- */
+      .module {
+        background: var(--card); border: 1px solid var(--card-line); border-radius: var(--radius);
+        margin-bottom: 16px; overflow: hidden; box-shadow: var(--shadow);
+      }
+      .module-head {
+        width: 100%; font-family: inherit; background: none; border: 0; cursor: pointer;
+        display: flex; align-items: center; gap: 14px; text-align: left;
+        padding: 20px 24px; color: var(--ink);
+      }
+      .module-head .n {
+        font-family: "IBM Plex Mono", monospace; font-weight: 600; font-size: 14px;
+        background: var(--green); color: var(--lime); border-radius: 8px; padding: 5px 10px; flex-shrink: 0;
+      }
+      .module-head .t { font-family: "Fraunces", serif; font-size: 22px; font-weight: 650; }
+      .module-head .chev { margin-left: auto; font-size: 20px; color: var(--muted); transition: transform 0.2s; flex-shrink: 0; }
+      .module.open .module-head .chev { transform: rotate(180deg); }
+      .module-body { display: none; padding: 0 24px 26px; }
+      .module.open .module-body { display: block; }
+      .module-body > p { max-width: 760px; margin-bottom: 16px; }
+      .code-wrap { position: relative; margin-bottom: 18px; }
+      pre {
+        background: var(--code-bg); color: var(--code-ink); border-radius: 12px;
+        padding: 18px 20px; margin: 0; overflow-x: auto;
+        font-family: "IBM Plex Mono", monospace; font-size: 14.5px; line-height: 1.6;
+        white-space: pre-wrap; word-break: break-word;
+      }
+      pre .hl { color: var(--lime); }
+      .copy-btn {
+        position: absolute; top: 10px; right: 10px;
+        font-family: "IBM Plex Mono", monospace; font-size: 12.5px; font-weight: 600;
+        background: var(--lime); color: #1c2a12; border: 0; border-radius: 8px;
+        padding: 6px 12px; cursor: pointer;
+      }
+      .real-quote {
+        border-left: 5px solid var(--orange); background: var(--bg-soft);
+        border-radius: 0 12px 12px 0; padding: 14px 18px; margin-bottom: 16px; max-width: 760px;
+      }
+      .real-quote .lbl, .try-line .lbl {
+        font-family: "IBM Plex Mono", monospace; font-size: 12px; font-weight: 600;
+        letter-spacing: 0.14em; text-transform: uppercase; color: var(--orange); margin-bottom: 5px;
+      }
+      .real-quote p { font-size: 16.5px; }
+      .gate-line { font-weight: 700; margin-bottom: 14px; }
+      .try-line { max-width: 760px; }
+      .try-line p { color: var(--muted); }
+
+      /* ---------- gates game ---------- */
+      .game {
+        background: var(--green-deep); color: var(--green-ink); border-radius: 24px;
+        padding: 36px; box-shadow: var(--shadow);
+      }
+      .game .kicker { color: var(--lime); }
+      .game h2 { font-size: clamp(28px, 4vw, 40px); margin-bottom: 10px; }
+      .game .intro { color: rgba(238, 243, 228, 0.82); max-width: 680px; margin-bottom: 8px; }
+      .score-line { font-family: "IBM Plex Mono", monospace; font-size: 15px; color: var(--lime); margin-bottom: 24px; }
+      .scenario { background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(238, 243, 228, 0.18); border-radius: 16px; padding: 22px; margin-bottom: 16px; }
+      .scenario h3 { font-family: "Archivo", sans-serif; font-size: 18.5px; font-weight: 700; margin-bottom: 14px; }
+      .scenario h3 .qn { font-family: "IBM Plex Mono", monospace; color: var(--lime); font-size: 14px; margin-right: 8px; }
+      .opt-row { display: flex; flex-wrap: wrap; gap: 10px; }
+      .opt {
+        font-family: inherit; font-size: 15px; font-weight: 600; cursor: pointer;
+        background: transparent; color: var(--green-ink);
+        border: 1.5px solid rgba(238, 243, 228, 0.4); border-radius: 999px; padding: 9px 16px;
+      }
+      .opt:hover:not(:disabled) { border-color: var(--lime); }
+      .opt:disabled { cursor: default; opacity: 0.55; }
+      .opt.right { background: var(--lime); color: #1c2a12; border-color: var(--lime); opacity: 1; }
+      .opt.wrong { background: #b3401a; color: #fff2ea; border-color: #b3401a; opacity: 1; }
+      .feedback { display: none; margin-top: 14px; font-size: 15.5px; color: rgba(238, 243, 228, 0.92); }
+      .feedback.show { display: block; }
+      .game-final { display: none; margin-top: 10px; font-family: "Fraunces", serif; font-size: 24px; }
+      .game-final.show { display: block; }
+
+      /* ---------- library ---------- */
+      .one-liners { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 22px; }
+      .one-liner { background: var(--card); border: 1px solid var(--card-line); border-radius: 14px; padding: 16px 18px; }
+      .one-liner .s { font-family: "IBM Plex Mono", monospace; font-size: 12.5px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--orange); margin-bottom: 6px; }
+      .one-liner p { font-size: 15.5px; }
+
+      /* ---------- glossary ---------- */
+      .flash-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 14px; }
+      .flash { perspective: 800px; height: 168px; cursor: pointer; background: none; border: 0; padding: 0; font-family: inherit; text-align: left; display: block; width: 100%; }
+      .flash-inner { position: relative; display: block; width: 100%; height: 100%; transition: transform 0.45s; transform-style: preserve-3d; }
+      .flash.flipped .flash-inner { transform: rotateY(180deg); }
+      .flash-face {
+        position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden;
+        border-radius: 16px; padding: 18px; display: flex; flex-direction: column; justify-content: center;
+      }
+      .flash-front { background: var(--green); color: var(--green-ink); }
+      .flash-front .term { font-family: "Fraunces", serif; font-size: 24px; font-weight: 650; }
+      .flash-front .tap { font-family: "IBM Plex Mono", monospace; font-size: 11.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--lime); margin-top: 8px; }
+      .flash-back { background: var(--card); color: var(--ink); border: 1px solid var(--card-line); transform: rotateY(180deg); font-size: 14.5px; line-height: 1.45; }
+
+      /* ---------- your turn ---------- */
+      .yourturn {
+        background: var(--blue); color: var(--blue-ink); border-radius: 24px; padding: 38px;
+      }
+      .yourturn .kicker { color: var(--orange); }
+      .yourturn h2 { font-size: clamp(28px, 4vw, 40px); margin-bottom: 12px; }
+      .yourturn .intro { max-width: 700px; margin-bottom: 26px; }
+      .steps { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 26px; }
+      .step-card { background: rgba(255, 255, 255, 0.55); border-radius: 14px; padding: 18px 20px; }
+      @media (prefers-color-scheme: dark) { .step-card { background: rgba(255, 255, 255, 0.08); } }
+      .step-card h3 { font-size: 19px; margin-bottom: 6px; }
+      .step-card h3 .sn { font-family: "IBM Plex Mono", monospace; font-size: 13px; color: var(--orange); margin-right: 8px; }
+      .step-card p { font-size: 15.5px; }
+      .checklist { list-style: none; margin: 0 0 28px; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 8px 22px; }
+      .checklist li { padding: 9px 0 9px 34px; position: relative; font-weight: 600; font-size: 15.5px; border-bottom: 1px dashed rgba(23, 58, 82, 0.3); }
+      .checklist li::before {
+        content: ""; position: absolute; left: 2px; top: 12px; width: 16px; height: 16px;
+        border: 2.5px solid var(--blue-ink); border-radius: 4px;
+      }
+      .closing-rule { font-family: "Fraunces", serif; font-size: clamp(30px, 4.6vw, 48px); font-weight: 800; line-height: 1.15; }
+      .closing-rule span { color: var(--orange); }
+
+      /* ---------- footer ---------- */
+      footer { margin-top: 84px; background: var(--green-deep); color: var(--green-ink); padding: 44px 0 52px; }
+      footer h2 { font-size: 26px; margin-bottom: 8px; }
+      footer .kicker { color: var(--lime); }
+      .bench { display: flex; flex-wrap: wrap; gap: 12px; margin: 20px 0 26px; }
+      .bench a {
+        color: var(--green-ink); text-decoration: none; font-weight: 700; font-size: 15.5px;
+        border: 1.5px solid rgba(238, 243, 228, 0.4); border-radius: 999px; padding: 10px 18px;
+      }
+      .bench a:hover { border-color: var(--lime); color: var(--lime); }
+      footer .fine { color: rgba(238, 243, 228, 0.75); font-size: 14.5px; max-width: 820px; margin-bottom: 12px; }
+      footer .fine b { color: var(--lime); }
+
+      @media (max-width: 880px) {
+        .topnav .wrap { flex-wrap: wrap; gap: 8px 14px; }
+        .navlinks { flex-wrap: wrap; overflow-x: visible; -webkit-mask-image: none; mask-image: none; }
+        .hero-grid { grid-template-columns: 1fr; }
+        .hero-card { max-width: 340px; }
+        .film-grid { grid-template-columns: 1fr; }
+        .film-frame { max-width: 330px; }
+        .stepper { grid-template-columns: 1fr; }
+        .stage-list { flex-direction: row; flex-wrap: wrap; }
+        .stage-btn { flex: 1 1 44%; }
+        .one-liners, .steps, .checklist { grid-template-columns: 1fr; }
+        section { padding-top: 60px; }
+        .game, .yourturn { padding: 26px 20px; }
+        .stage-panel, .tab-panel, .jev-band { padding: 24px 20px; }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        html { scroll-behavior: auto; }
+        .flash-inner, .module-head .chev { transition: none; }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="topnav">
+      <div class="wrap">
+        <div class="brand">Video <span>School</span></div>
+        <div class="navlinks">
+          <a href="#film">The film</a>
+          <a href="#crew">The crew</a>
+          <a href="#pipeline">Pipeline</a>
+          <a href="#workshop">Prompt workshop</a>
+          <a href="#game">Gates game</a>
+          <a href="#library">Prompt library</a>
+          <a href="#glossary">Glossary</a>
+          <a href="#yourturn">Your turn</a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- ============ HERO ============ -->
+    <header class="hero">
+      <div class="wrap hero-grid">
+        <div>
+          <span class="pill">KGV · Video Studio School</span>
+          <h1>Make a video <em>like this one.</em></h1>
+          <p class="sub">This is the real 77.5-second advert a student crew of AI specialists made for a coffee brand — briefed, built, checked and argued over, one prompt at a time. This page teaches you the exact prompt series behind it, stage by stage.</p>
+          <div class="cta-row">
+            <a class="btn" href="#film">Watch the film ▶</a>
+            <a class="btn ghost" href="#crew">Meet the crew →</a>
+            <a class="btn ghost" href="#game">Take the gates quiz</a>
+          </div>
+          <p class="hero-note">Three open-source tools did the heavy lifting: <b>gstack</b> supplied the crew, <b>Jev</b> refereed every gate, and <b>showtime</b> was the studio that built the film. You will learn to drive all three with prompts.</p>
+        </div>
+        <div class="hero-card">
+          <img src="assets/poster.jpg" alt="Frame from the finished BrewClub pilot video: the founder mid-pitch in the roastery, with the caption 'Seven dollars. For coffee. Stop.'" />
+          <div class="spec-strip">
+            <span><b>BrewClub pilot</b></span>
+            <span>77.5 s</span>
+            <span>9:16 vertical</span>
+            <span>−14 LUFS</span>
+            <span>Two critics said “ship”</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- ============ THE FILM ============ -->
+    <section id="film" style="padding-top: 48px;">
+      <div class="wrap film-grid">
+        <div class="film-frame">
+          <iframe src="https://www.youtube.com/embed/htJBvKUL3WM" title="Muse AI brewclub pilot final 1080 1920 oct2026 — the finished BrewClub pilot film" sandbox="allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox" referrerpolicy="no-referrer" loading="lazy" allowfullscreen></iframe>
+        </div>
+        <div class="film-side">
+          <p class="kicker">Watch · The finished film</p>
+          <h2>The real render, live on YouTube</h2>
+          <p class="lede">This is not a mock-up or a trailer for the course — it is the actual film the rest of this page teaches you to make: the BrewClub pilot, rendered end-to-end by <b>Muse AI</b>, with <b>gstack</b> supplying the crew, <b>Jev</b> refereeing the gates and <b>showtime</b> doing the rendering. Watch it first; then scroll down and learn exactly how it was made, prompt by prompt.</p>
+          <a class="btn" href="https://youtube.com/shorts/htJBvKUL3WM" target="_blank" rel="noopener">Watch on YouTube ↗</a>
+          <p class="film-cite"><b>Citation:</b> “Muse AI brewclub pilot final 1080 1920 oct2026” — YouTube Short, the delivered Stage 8 master: 1080×1920 · 77.5 s · −14 LUFS · captions burned in. If the player above is blocked where you are, the YouTube link is the film.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ THE CREW / TOOLS ============ -->
+    <section id="crew">
+      <div class="wrap">
+        <p class="kicker">01 · The toolkit</p>
+        <div class="sec-head">
+          <h2>Three tools, one film set</h2>
+          <p>Nobody “just asked an AI for a video”. The pilot was made the way real films are made: a crew with jobs, a referee at every decision, and a studio that does the building. Here is who does what.</p>
+        </div>
+
+        <div class="tabs" role="tablist" aria-label="The three tools">
+          <button class="tab-btn" role="tab" aria-selected="true" data-tab="gstack"><span class="num">01</span>gstack — the crew</button>
+          <button class="tab-btn" role="tab" aria-selected="false" data-tab="jev"><span class="num">02</span>Jev — the referee</button>
+          <button class="tab-btn" role="tab" aria-selected="false" data-tab="showtime"><span class="num">03</span>showtime — the studio</button>
+        </div>
+
+        <div class="tab-panel active" id="tab-gstack" role="tabpanel">
+          <h3>gstack: a film crew you brief in writing</h3>
+          <p class="who">Open source · by Garry Tan · free to use</p>
+          <p>gstack is a pack of specialist AI roles — a CEO, a product manager, an engineer, a QA tester, a DevOps hand — plus the video specialists this project added. Each one does <b>exactly one job</b>, and you brief each one in writing before it starts. Process arguments are settled by the roles; technical arguments are settled by whoever has the evidence.</p>
+          <p>The golden rule of the whole course lives here: <b>a good prompt is a good brief</b> — one job, the right references, a checkable finish line, and a clear list of what is out of scope.</p>
+          <div class="cast">
+            <h4>The BrewClub crew</h4>
+            <div class="chips">
+              <span class="chip">creative-director<small>owns the concept call</small></span>
+              <span class="chip">scriptwriter<small>writes the voiceover</small></span>
+              <span class="chip">storyboard-artist<small>one shot per line</small></span>
+              <span class="chip">sound-designer<small>music beds</small></span>
+              <span class="chip">voice-director<small>casts the narrator</small></span>
+              <span class="chip">motion-designer<small>builds the scenes</small></span>
+              <span class="chip">editor<small>merges the cut</small></span>
+              <span class="chip">critic<small>asks “would I post this?”</small></span>
+              <span class="chip">researcher<small>fact-checks the claims</small></span>
+            </div>
+          </div>
+          <div class="example-box">
+            <p class="lbl">Real example from the pilot</p>
+            <p>The scriptwriter was briefed to write the voiceover <b>first</b> and fit it to the target length — because every later stage (storyboard, build, captions) would be timed to that voice read. One brief, one job, huge downstream effect.</p>
+          </div>
+        </div>
+
+        <div class="tab-panel" id="tab-jev" role="tabpanel">
+          <h3>Jev: the referee at every gate</h3>
+          <p class="who">TypeSafe AI's decision model · the gate judge</p>
+          <p>At each stage gate, someone has to say: proceed, fix it first, or escalate to a human. Jev is a decision model that reads the evidence and answers with a verdict <b>and a confidence score</b> — so you can see how sure it is, not just what it picked.</p>
+          <p>In the pilot, Jev ran in <b>shadow mode</b>: it advised, and humans decided. That is the safe way to adopt any judge — let it prove itself on real calls before you hand it any authority. And there is a kill switch: a human can bypass Jev entirely.</p>
+          <div class="example-box">
+            <p class="lbl">Real readings from the pilot</p>
+            <p>Concept gate: <b>proceed at 0.51</b> — barely sure, so the human read Jev's notes before agreeing. Script gate: <b>proceed at 0.95</b> — the strongest advisory of the run, no rework ordered. Storyboard gate: <b>proceed at 0.86</b>. Try the confidence rule yourself in the slider below the pipeline.</p>
+          </div>
+        </div>
+
+        <div class="tab-panel" id="tab-showtime" role="tabpanel">
+          <h3>showtime: the studio that builds the film</h3>
+          <p class="who">Open source · by Favio Vazquez · runs on your own machine</p>
+          <p>showtime is the production studio: it builds scenes, renders the video, records the voiceover, lays down the music bed, burns in the captions and runs the machine QA checks. It is free and runs locally — no studio hire, no render farm.</p>
+          <p>The crew (gstack) tells it what to build, stage by stage. The studio never decides the story — it executes briefs, exactly like a real production floor.</p>
+          <div class="example-box">
+            <p class="lbl">Real example from the pilot</p>
+            <p>All 16 scenes of the BrewClub film were built as separate motion fragments, then merged in storyboard order into one 77.5-second vertical master — rendered, captioned and loudness-checked to −14 LUFS by the studio pipeline.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ PIPELINE ============ -->
+    <section id="pipeline">
+      <div class="wrap">
+        <p class="kicker">02 · The pipeline</p>
+        <div class="sec-head">
+          <h2>Nine stages, nine gates</h2>
+          <p>Every stage ends at a <b>gate</b>. Some gates are <b>hard stops</b> — a human must decide before anything moves. Others are machine checks that block automatically on a fail. Nothing builds past a hard stop without a human. Click a stage to open it.</p>
+        </div>
+
+        <div class="stepper">
+          <div class="stage-list" id="stageList" role="tablist" aria-label="Pipeline stages"></div>
+          <div class="stage-panel" id="stagePanel" role="tabpanel"></div>
+        </div>
+
+        <div class="jev-band">
+          <p class="kicker">Try it · The referee's rule</p>
+          <h3>How sure is sure enough?</h3>
+          <p>When Jev advises at a gate, its confidence score routes the decision. Drag the slider and watch the routing change. This is the real rule from the pilot's gate design — the slider itself is a teaching model, not a live call to Jev.</p>
+          <div class="jev-readout">
+            <span class="jev-value" id="jevValue">0.51</span>
+            <span class="jev-route ask" id="jevRoute">ASK A HUMAN — proceed only with confirmation</span>
+          </div>
+          <input type="range" id="jevSlider" min="0" max="100" value="51" aria-label="Jev confidence score" />
+          <div class="jev-scale"><span>0.00 — a coin flip</span><span>0.50</span><span>0.90</span><span>1.00 — certain</span></div>
+          <div class="jev-presets">
+            <span style="align-self:center;font-weight:600;font-size:14.5px;">The pilot's real readings:</span>
+            <button data-conf="51">Concept gate · 0.51</button>
+            <button data-conf="86">Storyboard gate · 0.86</button>
+            <button data-conf="95">Script gate · 0.95</button>
+          </div>
+          <p class="jev-fine">Notice the lesson in the first button: 0.51 is <i>not</i> a strong signal. That is exactly why the human read Jev's notes at the concept gate instead of just nodding. Confidence is a dial, not a verdict.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ PROMPT WORKSHOP ============ -->
+    <section id="workshop">
+      <div class="wrap">
+        <p class="kicker">03 · Prompt workshop</p>
+        <div class="sec-head">
+          <h2>The prompt series, stage by stage</h2>
+          <p>These are the prompt patterns that actually made the film — one per stage, with the real BrewClub example beside each one. Copy a pattern, swap in your own product, and run it. Short sessions beat one long cram: one stage a day is a good pace.</p>
+        </div>
+
+        <!-- Stage 0 -->
+        <div class="module open">
+          <button class="module-head" aria-expanded="true"><span class="n">0</span><span class="t">Brief — write the contract first</span><span class="chev">⌄</span></button>
+          <div class="module-body">
+            <p>Before any creative work, the crew gets a one-page brief. It fixes the product, the audience, and the one-sentence contract the whole film must keep — plus what must appear and what must never appear. Every later argument is settled by pointing back at this page.</p>
+            <div class="code-wrap"><pre id="p0">Write a one-page brief for a short product video:
+- Product: [what it is, in one line]
+- Audience: [who it is for, specifically]
+- One-sentence contract: "This video tells [audience] that [the one claim]."
+- Must include: a hook in the first 3 seconds, the value proposition, a call to action
+- Must avoid: [claims we cannot prove, anything off-brand]</pre><button class="copy-btn" data-copy="p0">COPY</button></div>
+            <div class="real-quote"><p class="lbl">Real BrewClub example</p><p>The contract: <i>“This video tells urban professionals tired of $7 chain coffee that café-grade coffee at home costs about forty cents a cup.”</i> One sentence — and every concept, line and shot was judged against it.</p></div>
+            <p class="gate-line">The gate: 🟥 HUMAN — a person approves the brief before anything else exists.</p>
+            <div class="try-line"><p class="lbl">Try it yourself</p><p>Write a one-sentence contract for a video about a school canteen snack. If it needs the word “and”, it is two contracts — pick one.</p></div>
+          </div>
+        </div>
+
+        <!-- Stage 1 -->
+        <div class="module">
+          <button class="module-head" aria-expanded="false"><span class="n">1</span><span class="t">Concept — four pitches, one winner</span><span class="chev">⌄</span></button>
+          <div class="module-body">
+            <p>The creative-director pitches several genuinely different directions, not four versions of the same idea. A human picks exactly one. The test for a weak concept is the <b>transplant test</b>: cover the logo — if you cannot tell whose video it is, the concept fails.</p>
+            <div class="code-wrap"><pre id="p1">Give me 4 concepts for this video: 3 structurally different + 1 wildcard.
+For each: title, one-line logline, narrative shape, the first-3-seconds hook,
+how it uses the founder-deadpan formula, and why it fits the brief.
+Mark exactly ONE as RECOMMENDED, with a reason.
+Also show me the glossy category-default version — so we can reject it on purpose.</pre><button class="copy-btn" data-copy="p1">COPY</button></div>
+            <div class="real-quote"><p class="lbl">Real BrewClub example</p><p>The winner was <b>C1 “The Receipt”</b>: a founder unrolls a comically long $7 receipt — it is the hook, the evidence and the punchline in one prop. Parked: C2 “The 7:02 Race”, C3 “Exhibit A”, wildcard W1 “Planet Coffee”. Deliberately rejected: a glossy lifestyle coffee ad (slow-mo beans, sunrise pour-over) — it failed the transplant test on every line.</p></div>
+            <p class="gate-line">The gate: 🟥 HUMAN — a person picks ONE concept. Jev advised “proceed” at just 0.51 here, so the human read the notes first.</p>
+            <div class="try-line"><p class="lbl">Try it yourself</p><p>Run the transplant test on a real advert you saw this week. Cover the logo mentally — could it be selling a competitor's product?</p></div>
+          </div>
+        </div>
+
+        <!-- Stage 2 -->
+        <div class="module">
+          <button class="module-head" aria-expanded="false"><span class="n">2</span><span class="t">Script + sound — the voice is the clock</span><span class="chev">⌄</span></button>
+          <div class="module-body">
+            <p>The voiceover is written and recorded <b>before</b> anything is drawn, because the real voice read becomes the timing truth for the whole film. In the same stage, the sound-designer offers music beds and the voice-director offers narrators — a human locks all three choices.</p>
+            <div class="code-wrap"><pre id="p2">Draft the voiceover script FIRST, fitted to [target length]:
+- One short line per beat; deadpan; the hook lands in line 1
+- Open on the problem, end on the call to action
+Then propose 3 music beds and 3 narrator voices for me to choose from.
+Mark exactly one of each as recommended, with a reason.</pre><button class="copy-btn" data-copy="p2">COPY</button></div>
+            <div class="real-quote"><p class="lbl">Real BrewClub example</p><p>16 lines, opening <i>“Seven dollars. For coffee. Stop.”</i> and closing <i>“Stop overpaying. Start brewing.”</i> Locked choices: music bed A <i>Honest Strum</i>, narrator A — a steady founder voice. The recorded read ran 77.5 seconds, and that number ruled every later stage.</p></div>
+            <p class="gate-line">The gate: 🟥 HUMAN — a person locks the script, the music bed and the narrator. Jev's read here: proceed at 0.95, its strongest of the run.</p>
+            <div class="try-line"><p class="lbl">Try it yourself</p><p>Read your Stage 0 contract aloud and time it. That timing — not your target — is now your film's real length.</p></div>
+          </div>
+        </div>
+
+        <!-- Stage 3 -->
+        <div class="module">
+          <button class="module-head" aria-expanded="false"><span class="n">3</span><span class="t">Storyboard — one shot per line</span><span class="chev">⌄</span></button>
+          <div class="module-body">
+            <p>The storyboard-artist turns the script into shots: one shot per voiceover line, each with a time range taken from the actual voice recording, a visual description, and the on-screen text. This stage carries the course's iron rule — learn it by heart.</p>
+            <div class="code-wrap"><pre id="p3">Storyboard the locked script: one shot per voiceover line.
+For each shot: time range, visual description, on-screen text.
+<span class="hl">IRON RULE: time every shot to the REAL voice read — never to the
+target duration. A shot's length = its line's length in the recording.</span></pre><button class="copy-btn" data-copy="p3">COPY</button></div>
+            <div class="real-quote"><p class="lbl">Real BrewClub example</p><p>16 shots for 16 lines, timed to the 77.5-second read. This rule exists because a full cut was once rejected for being timed to the 75-second target instead — the pictures drifted away from the words, and the whole cut had to be rebuilt.</p></div>
+            <p class="gate-line">The gate: 🟥 HUMAN — a person approves the board. Jev advised proceed at 0.86.</p>
+            <div class="try-line"><p class="lbl">Try it yourself</p><p>Take three lines of any speech and storyboard them: one shot each, timed to a real recording of your own voice.</p></div>
+          </div>
+        </div>
+
+        <!-- Stage 4 -->
+        <div class="module">
+          <button class="module-head" aria-expanded="false"><span class="n">4</span><span class="t">Animatic — the cheap rehearsal</span><span class="chev">⌄</span></button>
+          <div class="module-body">
+            <p>An animatic is the storyboard panels played in order with the real voiceover and music. It answers one question — does the film <i>feel</i> right at this pace, in this order? Fixing a pacing problem here costs minutes; fixing it after the full build costs a re-render of everything.</p>
+            <div class="code-wrap"><pre id="p4">Build an animatic: storyboard panels in order + the real voiceover
++ the locked music bed. Flag any shot that feels too long or too short,
+and any two shots that would work better swapped.</pre><button class="copy-btn" data-copy="p4">COPY</button></div>
+            <div class="real-quote"><p class="lbl">Real BrewClub example</p><p>The 77.5-second animatic was screened before a single scene was animated. The human's sign-off was specifically on <b>pace and order</b> — the two things that are cheap to fix now and painful later.</p></div>
+            <p class="gate-line">The gate: 🟥 HUMAN — a person approves pace and order.</p>
+            <div class="try-line"><p class="lbl">Try it yourself</p><p>Play your 3-shot storyboard as a slideshow over your voice recording. Where did you get bored? That is an animatic note.</p></div>
+          </div>
+        </div>
+
+        <!-- Stage 5 -->
+        <div class="module">
+          <button class="module-head" aria-expanded="false"><span class="n">5</span><span class="t">Build — the studio floor</span><span class="chev">⌄</span></button>
+          <div class="module-body">
+            <p>Now the motion-designers build each scene for real and the editor merges them in storyboard order. Builders work in parallel, each inside their own brief. The director does not take “done” on trust — they verify every builder's output with their own checks.</p>
+            <div class="code-wrap"><pre id="p5">Build scene [N] to the locked storyboard shot:
+- Match the shot's exact time slot from the voice read
+- On-screen text: use the locked script wording ONLY — never improvise copy
+- Stay inside your folder; flag anything outside your brief instead of fixing it</pre><button class="copy-btn" data-copy="p5">COPY</button></div>
+            <div class="real-quote"><p class="lbl">Real BrewClub example</p><p>All 16 motion fragments were built separately, then merged in storyboard order. “Use the locked wording only” sounds obvious — in Stage 7 you will see what happened when one designer improvised anyway.</p></div>
+            <p class="gate-line">The gate: internal — the director verifies each scene before the merge.</p>
+            <div class="try-line"><p class="lbl">Try it yourself</p><p>Write a build brief for one scene of your film. Could a stranger build exactly what you pictured from the brief alone?</p></div>
+          </div>
+        </div>
+
+        <!-- Stage 6 -->
+        <div class="module">
+          <button class="module-head" aria-expanded="false"><span class="n">6</span><span class="t">QA — the machine checks the machine work</span><span class="chev">⌄</span></button>
+          <div class="module-body">
+            <p>QA is automatic: does the render play, are the audio levels right, are the captions actually there? Zero fails means go. But learn QA's honest limit — it checks the file, not the film. It cannot tell a good joke from a bad one, or a true claim from a false one.</p>
+            <div class="code-wrap"><pre id="p6">Run full QA on the render: file integrity, duration, audio loudness
+against the −14 LUFS target, captions present on every line.
+Report fails and warnings separately. 0 fail = proceed; any fail = block.</pre><button class="copy-btn" data-copy="p6">COPY</button></div>
+            <div class="real-quote"><p class="lbl">Real BrewClub example</p><p>The pilot's first full render: <b>0 fail, 22 warnings</b> — proceed, because 0 fail means go. One marginal warning (a headline 5&nbsp;px past the phone-safe zone) was fixed anyway. And in an earlier planted-defect trial, QA passed a cut with <b>3 real defects</b> in it — which is why the next stage exists.</p></div>
+            <p class="gate-line">The gate: ⚙️ MACHINE — automatic, and it blocks on any fail.</p>
+            <div class="try-line"><p class="lbl">Try it yourself</p><p>List three things a machine can check about a video, and three things only a viewer can judge. Keep both lists — you will need them at Stage 7.</p></div>
+          </div>
+        </div>
+
+        <!-- Stage 7 -->
+        <div class="module">
+          <button class="module-head" aria-expanded="false"><span class="n">7</span><span class="t">Critic — “would I post this?”</span><span class="chev">⌄</span></button>
+          <div class="module-body">
+            <p>Two independent critics watch the film and answer one question: <b>WOULD I POST THIS?</b> Every finding must point at the exact frame — and the crew verifies each finding at that frame before acting on it, because even critics can be wrong.</p>
+            <div class="code-wrap"><pre id="p7">Review this cut as an independent critic. For every problem:
+name the shot, the timecode and the frame evidence.
+Judge the jokes, the claims and the honesty labels — not the file.
+End with one line: WOULD I POST THIS: yes / no.</pre><button class="copy-btn" data-copy="p7">COPY</button></div>
+            <div class="real-quote"><p class="lbl">Real BrewClub catches</p><p>Round 1 found: invented on-screen words (“Every day”) where the locked script said “for coffee. Stop.”; karaoke captions hidden <i>behind</i> the shredder scene; a coffee cup overlapping the caption zone; and a missing “Fictional brand” label. One finding was <b>dismissed with evidence</b> — “no narration” — because the mix report showed the voice 19&nbsp;dB above the music. Fixes were made, round 2 checked the pixels, and both critics said: ship.</p></div>
+            <p class="gate-line">The gate: ⚙️ + 🟥 — a critic's “no” blocks exactly like a QA fail, until the re-cut passes.</p>
+            <div class="try-line"><p class="lbl">Try it yourself</p><p>Watch any advert and write three critic findings, each with a timecode. Vague (“it's boring”) doesn't count — point at a frame.</p></div>
+          </div>
+        </div>
+
+        <!-- Stage 8 -->
+        <div class="module">
+          <button class="module-head" aria-expanded="false"><span class="n">8</span><span class="t">Delivery — ship it, but a human presses upload</span><span class="chev">⌄</span></button>
+          <div class="module-body">
+            <p>The editor exports the final master to spec and the job is done — except the last step. Publishing is irreversible: once a video is public, you cannot unpublish it from people's memories. So the upload button always belongs to a human.</p>
+            <div class="code-wrap"><pre id="p8">Export the final master: 1080×1920, burned-in captions, −14 LUFS.
+Name it, log its exact duration and spec, and STOP.
+Do not publish — hand it to the human for the upload decision.</pre><button class="copy-btn" data-copy="p8">COPY</button></div>
+            <div class="real-quote"><p class="lbl">Real BrewClub example</p><p>The delivered master: <b>final-2.mp4 — 1080×1920, 77.53 s, −14 LUFS</b>, captions burned in. It stayed internal until a human made the publishing call — it is now live on YouTube as “Muse AI brewclub pilot final 1080 1920 oct2026”; watch it in <a href="#film">The film</a> section at the top of this page. Still owed on it: a 30-second cutdown and a 16:9 version.</p></div>
+            <p class="gate-line">The gate: 🟥 HUMAN — publishing is irreversible, so it always waits for a person.</p>
+            <div class="try-line"><p class="lbl">Try it yourself</p><p>Write your own delivery spec for your class film: size, length, loudness, captions — and who is allowed to press upload.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ GATES GAME ============ -->
+    <section id="game">
+      <div class="wrap">
+        <div class="game">
+          <p class="kicker">04 · The gates game</p>
+          <h2>Human, machine, or blocked?</h2>
+          <p class="intro">Five real moments from the pilot's production. For each one, decide: does a human stop and choose, does the machine wave it through, or is it blocked until fixed? Your score lives only while this page is open.</p>
+          <p class="score-line">SCORE: <span id="scoreNow">0</span> / 5 · ANSWERED: <span id="answeredNow">0</span> / 5</p>
+          <div id="quiz"></div>
+          <p class="game-final" id="gameFinal"></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ PROMPT LIBRARY ============ -->
+    <section id="library">
+      <div class="wrap">
+        <p class="kicker">05 · Prompt library</p>
+        <div class="sec-head">
+          <h2>The one template behind every prompt</h2>
+          <p>Every crew member in the pilot was briefed with this exact shape. Learn why each line exists: one job only (three jobs = all done badly); only 2–3 references (context is fuel, too much is noise); a <b>checkable</b> “done when” (a wish can't be gated, a contract can); and “out of scope” — the most important line, because it stops the concept artist rewriting the script.</p>
+        </div>
+        <div class="code-wrap"><pre id="template"># Role: &lt;one job only&gt;
+Job: &lt;project name&gt;   Mode: studio
+Read: &lt;the 2–3 references that matter, nothing more&gt;
+Inputs (read-only): &lt;brief, decisions, previous stage output&gt;
+You own (write only here): &lt;your folder&gt;
+Deliver: &lt;the exact deliverable + its format&gt;
+Done when: &lt;a checkable condition&gt;
+Out of scope: &lt;what you must NOT touch&gt;</pre><button class="copy-btn" data-copy="template">COPY</button></div>
+
+        <div class="one-liners">
+          <div class="one-liner"><p class="s">Stage 0 · Brief</p><p>“Write a one-page brief: product, audience, one-sentence contract, must-include, must-avoid.”</p></div>
+          <div class="one-liner"><p class="s">Stage 1 · Concept</p><p>“Pitch 4 concepts (3 different + 1 wildcard) for [product] using the founder-deadpan formula; mark exactly one recommended.”</p></div>
+          <div class="one-liner"><p class="s">Stage 2 · Script + sound</p><p>“Draft the voiceover fitted to [length] first; then offer 3 music beds and 3 narrators to choose from.”</p></div>
+          <div class="one-liner"><p class="s">Stage 3 · Storyboard</p><p>“One shot per VO line, timed to the real voice read — never to the target duration.”</p></div>
+          <div class="one-liner"><p class="s">Stage 4 · Animatic</p><p>“Play the panels in order over the real VO and music; flag every pacing problem.”</p></div>
+          <div class="one-liner"><p class="s">Stage 5 · Build</p><p>“Build scene [N] to its locked shot and time slot; locked script wording only.”</p></div>
+          <div class="one-liner"><p class="s">Stage 6 · QA</p><p>“Check the render: integrity, levels, captions. Fails and warnings listed separately; 0 fail = go.”</p></div>
+          <div class="one-liner"><p class="s">Stage 7 · Critic</p><p>“Judge jokes, claims and labels with frame evidence. End with: WOULD I POST THIS — yes or no.”</p></div>
+          <div class="one-liner"><p class="s">Stage 8 · Delivery</p><p>“Export the master to spec, log it, and stop. Publishing is the human's call.”</p></div>
+          <div class="one-liner"><p class="s">Any stage · The honesty rule</p><p>“If the brand is fictional, every brand and offer frame carries a ‘Fictional brand — pilot film’ label.”</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ GLOSSARY ============ -->
+    <section id="glossary">
+      <div class="wrap">
+        <p class="kicker">06 · Glossary</p>
+        <div class="sec-head">
+          <h2>Words the crew actually uses</h2>
+          <p>Tap a card to flip it. If you can explain all twelve to a friend, you can brief a crew.</p>
+        </div>
+        <div class="flash-grid" id="flashGrid"></div>
+      </div>
+    </section>
+
+    <!-- ============ YOUR TURN ============ -->
+    <section id="yourturn">
+      <div class="wrap">
+        <div class="yourturn">
+          <p class="kicker">07 · Your turn</p>
+          <h2>The final project: your own 30-second film</h2>
+          <p class="intro">Same pipeline, smaller film. Pick a real product you know (a snack, a school club, a family recipe), run all nine stages with the prompts from the workshop, and finish with a 30-second cut. Work through it in short sessions — one stage at a time.</p>
+          <div class="steps">
+            <div class="step-card"><h3><span class="sn">A</span>Pick and contract</h3><p>Choose your product, then write the one-sentence contract: who it tells, and the one claim it makes. If the claim isn't provable, soften it to an opinion — like the pilot's “Tastes like a café cup <i>to us</i>.”</p></div>
+            <div class="step-card"><h3><span class="sn">B</span>Fill the mini-brief</h3><p>Use the Stage 0 pattern: product, audience, contract, must-include (3-second hook, value prop, CTA), must-avoid. Label your brand fictional if it is — on every brand frame.</p></div>
+            <div class="step-card"><h3><span class="sn">C</span>Run the nine stages</h3><p>Brief → concept → script + sound → storyboard → animatic → build → QA → critic → delivery. Record your own voice read and time everything to it. Stop at every human gate and actually decide.</p></div>
+            <div class="step-card"><h3><span class="sn">D</span>Ship the 30-second cut</h3><p>Export your master, then make the cutdown: the same film, re-edited to 30 seconds. Get a critic — a friend counts — to answer “would I post this?” before you show anyone else.</p></div>
+          </div>
+          <ul class="checklist">
+            <li>Stage 0 — brief approved</li>
+            <li>Stage 1 — one concept picked</li>
+            <li>Stage 2 — script, bed, narrator locked</li>
+            <li>Stage 3 — storyboard timed to the real read</li>
+            <li>Stage 4 — animatic pace approved</li>
+            <li>Stage 5 — all scenes built and merged</li>
+            <li>Stage 6 — QA at 0 fail</li>
+            <li>Stage 7 — a critic said “post it”</li>
+            <li>Stage 8 — master exported, human holds the upload</li>
+            <li>Cutdown — 30-second version shipped</li>
+          </ul>
+          <p class="closing-rule">Steal the formula, <span>not the video.</span></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ FOOTER / SOURCE BENCH ============ -->
+    <footer>
+      <div class="wrap">
+        <p class="kicker">Source bench</p>
+        <h2>Go and read the real tools</h2>
+        <p style="color:rgba(238,243,228,0.82);max-width:680px;">Everything on this page traces back to three open projects — and to the film they made together, now on YouTube. The tools are free — take them apart.</p>
+        <div class="bench">
+          <a href="https://youtube.com/shorts/htJBvKUL3WM" target="_blank" rel="noopener">The finished film on YouTube ↗</a>
+          <a href="https://github.com/garrytan/gstack" target="_blank" rel="noopener">gstack on GitHub ↗</a>
+          <a href="https://github.com/FavioVazquez/showtime" target="_blank" rel="noopener">showtime on GitHub ↗</a>
+          <a href="https://typesafe.ai" target="_blank" rel="noopener">TypeSafe AI — home of Jev ↗</a>
+        </div>
+        <p class="fine"><b>Honesty note:</b> BrewClub is a fictional brand invented for this pilot. The video learns the Dollar Shave Club <i>formula</i> — founder-led deadpan pitch, one location, absurd cutaways — but the script, brand and footage are all original; nothing was remade. That is why every brand and offer frame in the pilot carries a “Fictional brand — pilot film” label. Steal formulas; label fiction; never pass off a claim you cannot prove.</p>
+        <p class="fine">Every number on this page comes from the real pilot run: 77.5 s voice read · 16 shots · −14 LUFS · 0 QA fails · two critics, “would post: yes” · Jev readings 0.51 / 0.86 / 0.95. The gates quiz and flashcards keep score in this tab only — close the page and they reset.</p>
+      </div>
+    </footer>
+
+    <script>
+      /* ---------- tool tabs ---------- */
+      document.querySelectorAll(".tab-btn").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          document.querySelectorAll(".tab-btn").forEach(function (b) { b.setAttribute("aria-selected", "false"); });
+          document.querySelectorAll(".tab-panel").forEach(function (p) { p.classList.remove("active"); });
+          btn.setAttribute("aria-selected", "true");
+          document.getElementById("tab-" + btn.dataset.tab).classList.add("active");
+        });
+      });
+
+      /* ---------- pipeline stepper ---------- */
+      var STAGES = [
+        { n: "0", t: "Brief", role: "Crew role · the director writes it, a human approves it",
+          what: "A one-page brief fixes the product, the audience and the one-sentence contract, plus must-includes and must-avoids. Every later argument gets settled by pointing back at this page.",
+          gate: "human", gateText: "🟥 HUMAN GATE — hard stop: a person approves the brief" },
+        { n: "1", t: "Concept", role: "Crew role · creative-director pitches, a human picks",
+          what: "Four concepts are pitched — three structurally different plus one wildcard — each with a logline, a narrative shape and a first-3-seconds hook. Exactly one is marked recommended. Weak concepts die by the transplant test: cover the logo, and if nobody can tell whose video it is, it fails.",
+          gate: "human", gateText: "🟥 HUMAN GATE — hard stop: a person picks ONE concept" },
+        { n: "2", t: "Script + Sound", role: "Crew role · scriptwriter, sound-designer, voice-director",
+          what: "The voiceover is written and recorded first, fitted to the target length — its real duration becomes the clock for the whole film. Three music beds and three narrator voices are offered; a human locks the script, the bed and the voice.",
+          gate: "human", gateText: "🟥 HUMAN GATE — hard stop: script, music bed and narrator locked by a person" },
+        { n: "3", t: "Storyboard", role: "Crew role · storyboard-artist",
+          what: "One shot per voiceover line, each timed to the real voice read — the iron rule. Every shot gets a time range, a visual description and its on-screen text before anything is animated.",
+          gate: "human", gateText: "🟥 HUMAN GATE — hard stop: a person approves the board" },
+        { n: "4", t: "Animatic", role: "Crew role · editor assembles, a human judges pace",
+          what: "The still panels play in order with the real voiceover and music. This is the pace-and-order rehearsal: boredom, rush and wrong order all show up here, where fixing them costs minutes instead of a re-render.",
+          gate: "human", gateText: "🟥 HUMAN GATE — hard stop: a person approves pace and order" },
+        { n: "5", t: "Build", role: "Crew role · motion-designers build, editor merges, director verifies",
+          what: "Each scene is built as its own motion fragment, exactly to its storyboard slot, then merged in storyboard order. Builders work in parallel — and the director verifies every fragment with their own checks rather than trusting “done”.",
+          gate: "machine", gateText: "⚙️ DIRECTOR CHECK — every scene verified before the merge" },
+        { n: "6", t: "QA", role: "Crew role · the studio's machine checks",
+          what: "Automatic checks on the render: file integrity, duration, audio loudness against −14 LUFS, captions present. Zero fails means proceed. QA is powerful but blind to content — it cannot judge a joke, a claim or a label.",
+          gate: "machine", gateText: "⚙️ MACHINE GATE — automatic, blocks on any fail" },
+        { n: "7", t: "Critic", role: "Crew role · two independent critics",
+          what: "Two critics who did not build the film review it with frame-level evidence and answer one question: WOULD I POST THIS? Findings are verified at the cited frame before anyone acts — one pilot finding was dismissed because the mix report proved it wrong.",
+          gate: "both", gateText: "⚙️ + 🟥 GATE — a critic's “no” blocks like a QA fail" },
+        { n: "8", t: "Delivery", role: "Crew role · editor exports, a human owns the upload",
+          what: "The final master is exported to spec — 1080×1920, burned-in captions, −14 LUFS — named, logged and handed over. Publishing is irreversible, so the upload decision is never automated and never delegated.",
+          gate: "human", gateText: "🟥 HUMAN GATE — hard stop: a person decides whether to publish" }
+      ];
+      var stageList = document.getElementById("stageList");
+      var stagePanel = document.getElementById("stagePanel");
+      function gateIcon(g) { return g === "human" ? "🟥" : (g === "machine" ? "⚙️" : "⚙️🟥"); }
+      STAGES.forEach(function (s, i) {
+        var b = document.createElement("button");
+        b.className = "stage-btn"; b.setAttribute("role", "tab");
+        b.setAttribute("aria-selected", i === 0 ? "true" : "false");
+        b.innerHTML = '<span class="n">' + s.n + '</span><span class="t">' + s.t + '</span><span class="g">' + gateIcon(s.gate) + '</span>';
+        b.addEventListener("click", function () { selectStage(i); });
+        stageList.appendChild(b);
+      });
+      function selectStage(i) {
+        var s = STAGES[i];
+        stageList.querySelectorAll(".stage-btn").forEach(function (b, j) {
+          b.setAttribute("aria-selected", j === i ? "true" : "false");
+        });
+        var cls = s.gate === "human" ? "gate-human" : (s.gate === "machine" ? "gate-machine" : "gate-both");
+        stagePanel.innerHTML =
+          '<p class="kicker on-dark">Stage ' + s.n + ' of 8</p>' +
+          '<h3>' + s.t + '</h3>' +
+          '<p class="role">' + s.role + '</p>' +
+          '<p>' + s.what + '</p>' +
+          '<span class="gate-badge ' + cls + '">' + s.gateText + '</span>';
+      }
+      selectStage(0);
+
+      /* ---------- Jev confidence slider ---------- */
+      var slider = document.getElementById("jevSlider");
+      var jevValue = document.getElementById("jevValue");
+      var jevRoute = document.getElementById("jevRoute");
+      function jevUpdate() {
+        var v = Number(slider.value) / 100;
+        jevValue.textContent = v.toFixed(2);
+        jevRoute.className = "jev-route";
+        if (v >= 0.90) { jevRoute.classList.add("auto"); jevRoute.textContent = "AUTO — proceed to the next stage"; }
+        else if (v >= 0.50) { jevRoute.classList.add("ask"); jevRoute.textContent = "ASK A HUMAN — proceed only with confirmation"; }
+        else { jevRoute.classList.add("human"); jevRoute.textContent = "HUMAN DECIDES — with the full evidence pack"; }
+      }
+      slider.addEventListener("input", jevUpdate);
+      document.querySelectorAll(".jev-presets button").forEach(function (b) {
+        b.addEventListener("click", function () { slider.value = b.dataset.conf; jevUpdate(); });
+      });
+      jevUpdate();
+
+      /* ---------- workshop accordions ---------- */
+      document.querySelectorAll(".module-head").forEach(function (head) {
+        head.addEventListener("click", function () {
+          var m = head.parentElement;
+          var open = m.classList.toggle("open");
+          head.setAttribute("aria-expanded", open ? "true" : "false");
+        });
+      });
+
+      /* ---------- copy buttons ---------- */
+      document.querySelectorAll(".copy-btn").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          var el = document.getElementById(btn.dataset.copy);
+          var text = el ? el.innerText : "";
+          function done() {
+            var old = btn.textContent;
+            btn.textContent = "COPIED";
+            setTimeout(function () { btn.textContent = old; }, 1600);
+          }
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(text).then(done, done);
+          } else {
+            var ta = document.createElement("textarea");
+            ta.value = text; document.body.appendChild(ta); ta.select();
+            try { document.execCommand("copy"); } catch (e) {}
+            document.body.removeChild(ta); done();
+          }
+        });
+      });
+
+      /* ---------- gates game ---------- */
+      var QUIZ = [
+        { q: "The concept board is ready, with three directions and a wildcard.",
+          opts: ["🟥 A human picks one", "⚙️ Proceed automatically", "Keep generating concepts forever"],
+          right: 0,
+          why: "Hard stop. Choosing the direction is a judgement call about taste and fit — the pilot's human picked C1 “The Receipt”, and Jev's 0.51 advice was read, not obeyed." },
+        { q: "The render finished. QA reports 0 fail, 22 warnings.",
+          opts: ["⚙️ Proceed — 0 fail means go", "🟥 Block everything until warnings hit zero", "Re-render until the report is empty"],
+          right: 0,
+          why: "Proceed. Warnings are notes, not blocks — the pilot fixed one marginal warning (a headline 5 px past the safe zone) and moved on. Only a fail blocks." },
+        { q: "Jev says “proceed” at the concept gate — at 0.51 confidence, with minor notes.",
+          opts: ["Obey instantly — the model has spoken", "🟥 A human reads the notes, then decides", "Ignore Jev and flip a coin"],
+          right: 1,
+          why: "0.51 is barely better than a coin flip — that is why the routing rule sends it to a human with the notes attached. Confidence is a dial, not a verdict." },
+        { q: "A critic's review ends: “WOULD I POST THIS: no.”",
+          opts: ["Post it anyway — critics are harsh", "Ask the other critic to overrule", "⛔ Blocked like a QA fail — fix and re-cut"],
+          right: 2,
+          why: "A critic's “no” blocks exactly like a QA fail. The pilot's round 1 produced fixes, a re-cut, and a second round before both critics said ship." },
+        { q: "The video is done and exported. Time to upload it to YouTube.",
+          opts: ["⚙️ Auto-upload — the pipeline finished", "🟥 A human decides — publishing is irreversible", "Upload now, decide later"],
+          right: 1,
+          why: "Hard stop, always. The BrewClub pilot stayed internal until a person authorised publishing — only then did it go live on YouTube. You cannot un-ring that bell." }
+      ];
+      var quizEl = document.getElementById("quiz");
+      var score = 0, answered = 0;
+      QUIZ.forEach(function (item, qi) {
+        var box = document.createElement("div");
+        box.className = "scenario";
+        var h = document.createElement("h3");
+        h.innerHTML = '<span class="qn">Q' + (qi + 1) + '</span>' + item.q;
+        box.appendChild(h);
+        var row = document.createElement("div");
+        row.className = "opt-row";
+        var fb = document.createElement("p");
+        fb.className = "feedback";
+        item.opts.forEach(function (opt, oi) {
+          var b = document.createElement("button");
+          b.className = "opt"; b.textContent = opt;
+          b.addEventListener("click", function () {
+            row.querySelectorAll(".opt").forEach(function (x) { x.disabled = true; });
+            if (oi === item.right) { b.classList.add("right"); score++; fb.textContent = "Correct. " + item.why; }
+            else {
+              b.classList.add("wrong");
+              row.querySelectorAll(".opt")[item.right].classList.add("right");
+              fb.textContent = "Not quite. " + item.why;
+            }
+            fb.classList.add("show");
+            answered++;
+            document.getElementById("scoreNow").textContent = score;
+            document.getElementById("answeredNow").textContent = answered;
+            if (answered === QUIZ.length) {
+              var fin = document.getElementById("gameFinal");
+              fin.textContent = score === 5 ? "5 / 5 — you gate like a director. The crew would trust you with the upload password."
+                : score >= 3 ? score + " / 5 — solid gate instincts. Re-read the ones you missed; they are the expensive mistakes."
+                : score + " / 5 — the gates caught you this time. That is what they are for. Run it again.";
+              fin.classList.add("show");
+            }
+          });
+          row.appendChild(b);
+        });
+        box.appendChild(row);
+        box.appendChild(fb);
+        quizEl.appendChild(box);
+      });
+
+      /* ---------- glossary flashcards ---------- */
+      var TERMS = [
+        ["Brief", "The one-page contract for a film: product, audience, the one-sentence promise, must-includes and must-avoids. Every later argument points back at it."],
+        ["Concept", "The chosen creative direction — the idea that organises every shot. The pilot's was “The Receipt”: one long receipt as hook, evidence and punchline."],
+        ["Hook", "The first 3 seconds, designed to stop a scrolling thumb. “Seven dollars. For coffee. Stop.” — problem, stated flatly, immediately."],
+        ["Logline", "A concept compressed into one line: who, what prop or device, and what it proves. If the logline is dull, the concept probably is too."],
+        ["Spine", "The device that returns in every beat and holds the film together — in the pilot, the physical receipt: unrolled, measured, shredded."],
+        ["Storyboard", "The film drawn before it is built: one shot per voiceover line, each timed to the real voice read."],
+        ["Animatic", "Storyboard panels played in order with the real VO and music — the cheap rehearsal that exposes pace and order problems."],
+        ["Gate", "The checkpoint at the end of a stage where someone — human or machine — decides: proceed, fix, or stop."],
+        ["Hard stop", "A gate where work physically cannot continue until a human decides. Brief, concept, script lock and publishing are hard stops."],
+        ["Critic", "An independent reviewer who did not build the film and answers one question — “WOULD I POST THIS?” — with frame-level evidence."],
+        ["Music bed", "The track under the whole film. Chosen per project from options the sound-designer proposes; the pilot's was “Honest Strum”."],
+        ["Cutdown", "A shorter re-edit of a finished film — the pilot still owes a 30-second cutdown and a 16:9 version of its 77.5-second master."]
+      ];
+      var grid = document.getElementById("flashGrid");
+      TERMS.forEach(function (t) {
+        var card = document.createElement("button");
+        card.className = "flash";
+        card.setAttribute("aria-label", "Flashcard: " + t[0] + ". Activate to flip.");
+        card.innerHTML = '<span class="flash-inner"><span class="flash-face flash-front"><span class="term">' + t[0] + '</span><span class="tap">Tap to flip</span></span><span class="flash-face flash-back">' + t[1] + '</span></span>';
+        card.addEventListener("click", function () { card.classList.toggle("flipped"); });
+        grid.appendChild(card);
+      });
+    </script>
+  </body>
+</html>
